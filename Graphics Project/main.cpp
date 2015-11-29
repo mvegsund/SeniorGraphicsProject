@@ -211,7 +211,7 @@ int main(int argc, const char * argv[]){
 	std::vector< glm::vec3 > vertices;
 	std::vector< glm::vec2 > uvs;
 	std::vector< glm::vec3 > normals; // Won't be used at the moment.
-	bool res = loadOBJ("Banana.obj", vertices, uvs, normals);
+	bool res = loadOBJ("Banana.model", vertices, uvs, normals);
 	//glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
