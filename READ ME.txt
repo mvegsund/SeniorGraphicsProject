@@ -1,0 +1,5 @@
+My input file in a JSON file to make parsing and input easy!
+For RGB values I use floats between 0.0 and 1.0!
+
+I followed this tutorial online for compiling shaders, loading a model, and loading a BMP texture:
+http://www.opengl-tutorial.org/beginners-tutorials/

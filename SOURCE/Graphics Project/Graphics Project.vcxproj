@@ -103,6 +103,10 @@
       <AdditionalOptions>/SUBSYSTEM:console /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)InputFile.txt" "$(OutDir)"
+xcopy /y /e /i /r "$(ProjectDir)Data" "$(OutDir)Data"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -117,6 +121,10 @@
       <AdditionalOptions>/SUBSYSTEM:console /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)InputFile.txt" "$(OutDir)"
+xcopy /y /e /i /r "$(ProjectDir)Data" "$(OutDir)Data"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -135,6 +143,10 @@
       <AdditionalOptions>/SUBSYSTEM:windows /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)InputFile.txt" "$(OutDir)"
+xcopy /y /e /i /r "$(ProjectDir)Data" "$(OutDir)Data"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -153,17 +165,24 @@
       <AdditionalOptions>/SUBSYSTEM:windows /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(ProjectDir)InputFile.txt" "$(OutDir)"
+xcopy /y /e /i /r "$(ProjectDir)Data" "$(OutDir)Data"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="input.txt" />
+    <Text Include="ModelFragmentShader.txt" />
+    <Text Include="ModelVertexShader.txt" />
     <Text Include="ReadMe.txt" />
-    <Text Include="SimpleVertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dep\glew.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="objloader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleFragmentShader.fsh" />
+    <ClInclude Include="objloader.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

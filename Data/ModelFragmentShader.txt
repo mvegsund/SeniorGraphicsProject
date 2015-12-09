@@ -1,0 +1,52 @@
+#version 330 core
+
+in vec2 uvs;
+in vec3 modelPositionWS;
+in vec3 eyeDirectionCS;
+in vec3 lightDirectionCS;
+in vec3 normalCS;
+
+uniform sampler2D myTextureSampler;
+
+uniform vec3 lightPosition;
+uniform vec4 lightCol;
+uniform vec4 ambient;
+uniform vec4 diffuse;
+uniform vec4 specular;
+uniform vec4 emission;
+uniform float s;
+
+out vec4 color;
+
+void main(){
+
+	vec3 lightColor = vec3(lightCol.x*lightCol.w, lightCol.y*lightCol.w, lightCol.z*lightCol.w);
+	
+	float shininess = s;
+
+	vec3 diffuseColor = texture(myTextureSampler, uvs).rgb;
+	diffuseColor = vec3(diffuseColor.x*diffuse.x*diffuse.w, diffuseColor.y*diffuse.y*diffuse.w, diffuseColor.z*diffuse.z*diffuse.w);
+
+	vec3 ambientColor = vec3(ambient.x*ambient.w, ambient.y*ambient.w, ambient.z*ambient.w) * diffuseColor;
+	vec3 specularColor = vec3(specular.x*specular.w, specular.y*specular.w, specular.z*specular.w);
+
+	float dist = length(lightPosition - modelPositionWS);
+
+	vec3 n = normalize( normalCS );
+	vec3 l = normalize( lightDirectionCS );
+
+	float cosTheta = clamp (dot(n,l), 0, 1);
+
+	vec3 E = normalize(eyeDirectionCS);
+	vec3 R = reflect(-l,n);
+
+	float cosAlpha = clamp(dot(E,R), 0, 1);
+
+	vec3 emissionColor = vec3(emission.x*emission.w, emission.y*emission.w, emission.z*emission.w);
+
+	color.rgb = emissionColor + ambientColor +
+			diffuseColor * lightColor * shininess * cosTheta / (dist * dist) +
+			specularColor * lightColor * shininess * pow(cosAlpha, 5) / (dist*dist);
+	
+	color.a = 1.0f;
+}

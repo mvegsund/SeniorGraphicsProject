@@ -1,0 +1,31 @@
+#version 330 core
+
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexNorm;
+
+uniform mat4 MVP;
+uniform mat4 V;
+uniform mat4 M;
+uniform vec3 lightPosition;
+
+out vec2 uvs;
+out vec3 modelPositionWS;
+out vec3 eyeDirectionCS;
+out vec3 lightDirectionCS;
+out vec3 normalCS;
+
+void main(){
+
+	gl_Position =  MVP * vec4(vertexPosition, 1);
+	uvs = vertexUV;
+
+	modelPositionWS = (M * vec4(vertexPosition, 1)).xyz;
+	vec3 modelPositionCS = (V * M * vec4(vertexPosition, 1)).xyz;
+	eyeDirectionCS = vec3(0,0,0) - modelPositionCS;
+
+	vec3 lightPositionCS = (V * vec4(lightPosition, 1)).xyz;
+	lightDirectionCS = lightPositionCS + eyeDirectionCS;
+
+	normalCS = (V * M * vec4(vertexNorm, 0)).xyz;
+}
